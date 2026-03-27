@@ -3,11 +3,15 @@ name: Build and Deploy to EKS
 on:
   push:
     branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+    types: [opened, synchronize, reopened]
 
 env:
   AWS_REGION: us-east-1                  
   ECR_REPOSITORY: staging           
   EKS_CLUSTER_NAME: staging            
+
 
 jobs:
   build-and-deploy:
@@ -15,6 +19,8 @@ jobs:
     steps:
     - name: Checkout Code
       uses: actions/checkout@v4
+    - name: Welcome message
+      run: echo "Workflow triggered by PR creation/update"
 
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v4
@@ -44,6 +50,7 @@ jobs:
         # Replace the image placeholder in your deployment file with the new image tag
         sed -i 's|NODE_APP_IMAGE|${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}|g' k8s/deployment.yaml
         kubectl apply -f k8s/deployment.yaml
+
 
 
 
