@@ -9,12 +9,15 @@ env:
   ECR_REPOSITORY: staging           
   EKS_CLUSTER_NAME: staging            
 
+
 jobs:
   build-and-deploy:
     runs-on: self-hosted
     steps:
     - name: Checkout Code
       uses: actions/checkout@v4
+    - name: Welcome message
+      run: echo "Workflow triggered by PR creation/update"
 
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v4
