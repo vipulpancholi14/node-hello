@@ -44,3 +44,6 @@ jobs:
         # Replace the image placeholder in your deployment file with the new image tag
         sed -i 's|NODE_APP_IMAGE|${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}|g' k8s/deployment.yaml
         kubectl apply -f k8s/deployment.yaml
+
+
+        
