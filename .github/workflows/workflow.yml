@@ -5,6 +5,7 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+    types: [opened, synchronize, reopened]
 
 env:
   AWS_REGION: us-east-1                  
